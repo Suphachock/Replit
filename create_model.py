@@ -129,6 +129,6 @@ trainer.train()
 trainer.evaluate()
 
 # saving the fine tuned model & tokenizer
-model_path = "fake-news-bert-base-uncased"
+model_path = "model"
 model.save_pretrained(model_path)
 tokenizer.save_pretrained(model_path)

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/style.css') }}"
+    />
+
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/submit.css') }}"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    {% include "navbar.html" %}
+    <div class="ex1">
+      <form id="form" align="center">
+        <h1>Named Entity Recognition <i class="fa fa-tags" style="font-size:36px"></i></h1>
+        <br />
+        <textarea
+          id="textarea"
+          name="textarea"
+          rows="7"
+          cols="100"
+          style="width: 80%; max-width: 80%"
+          ;
+        ></textarea>
+        <br />
+        <div class="sm">
+          <button id="submit">Submit</button>
+        </div>
+      </form>
+      <div class="social">
+        <h4 align="center">Entity labels</h4>
+        <fieldset id="filter">
+          <input
+            type="checkbox"
+            id="ent"
+            value="person"
+            class="largerCheckbox"
+          />
+
+          <span style="background-color: #aa9cfc">PERSON</span>
+          <input type="checkbox" id="ent" value="norp" class="largerCheckbox" />
+          <span style="background-color: #c887fb">NORP</span>
+          <input type="checkbox" id="ent" value="org" class="largerCheckbox" />
+          <span style="background-color: #7aecec">ORG</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="gpe"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #fd9720">GPE</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="loc"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #fd9720">LOC</span>
+          <input
+            type="checkbox"
+            name="ent"
+            value="product"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #bfeeb7">PRODUCT</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="event"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #ffeb80">EVENT</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="work_of_art"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #f0d0ff">WORK OF ART</span>
+          <br />
+          <input
+            type="checkbox"
+            name="ent"
+            value="LANGUAGE"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #ff8197">LANGUAGE</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="date"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #bfe1d9">DATE</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="time"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #bfe1d9">TIME</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="percent"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #e4e7d2">PERCENT</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="money"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #e4e7d2">MONEY</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="quantity"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #e4e7d2">QUANTITY</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="ordinal"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #e4e7d2">ORDINAL</span>
+
+          <input
+            type="checkbox"
+            name="ent"
+            value="cardinal"
+            class="largerCheckbox"
+          />
+          <span style="background-color: #e4e7d2">CARDINAL</span>
+        </fieldset>
+      </div>
+    </div>
+    <form align="left">
+      <div id="output" class="neon" ></div>
+    </form>
+  </body>
+  <script>
+    $("#output").hide();
+    $(document).ready(function () {
+      $("#form").on("submit", function (e) {
+        $('input[type="checkbox"]').prop("checked", false);
+        $.ajax({
+          data: {
+            firstname: $("#textarea").val(),
+          },
+          type: "POST",
+          url: "/lab2.html",
+        }).done(function (data) {
+          var tt = $("#textarea").val();
+          if (tt != "") $("#output").html(data.output).show();
+          else $("#output").hide();
+        });
+        e.preventDefault();
+      });
+    });
+    $(".largerCheckbox").on("click", function () {
+      var tmp = [];
+      $(".largerCheckbox:checked").each(function () {
+        tmp.push($(this).val());
+      });
+      tmp = tmp.toString();
+      tmp = tmp.split(",");
+      console.log(tmp);
+      $.ajax({
+        data: {
+          text: $("#textarea").val(),
+          filter: tmp,
+        },
+        method: "POST",
+        url: "/filter",
+        cache: false,
+      }).done(function (data) {
+        let tt = $("#textarea").val();
+        if (tt != "") {
+          $("#output").html(data.output).show();
+        } else $("#output").hide();
+      });
+    });
+  </script>
+  <script src="{{url_for('static', filename='script/script.js')}}"></script>
+</html>

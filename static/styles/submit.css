@@ -1,0 +1,25 @@
+button:nth-child(1) {
+  color: greenyellow;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 15px;
+  margin: 5px;
+  text-transform: uppercase;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 300ms;
+  border: 2px solid;
+}
+button:hover {
+  box-shadow: 0 0 20px;
+  background: #1b1e06;
+}
+button:nth-child(2):focus {
+  color: yellow;
+  border: 2px solid yellow;
+  box-shadow: 0 0 20px yellow;
+}

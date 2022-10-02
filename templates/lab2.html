@@ -21,13 +21,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/submit.css') }}"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
     {% include "navbar.html" %}
     <div class="ex1">
       <form id="form" align="center">
-        <h1>Named Entity Recognition <i class="fa fa-tags" style="font-size:36px"></i></h1>
+        <h1>
+          Named Entity Recognition
+          <i class="fa fa-tags" style="font-size: 36px"></i>
+        </h1>
         <br />
         <textarea
           id="textarea"
@@ -44,127 +50,196 @@
       </form>
       <div class="social">
         <h4 align="center">Entity labels</h4>
-        <fieldset id="filter">
+        <div class="block">
           <input
             type="checkbox"
-            id="ent"
+            name="ent"
+            id="checkbox"
             value="person"
             class="largerCheckbox"
           />
-
-          <span style="background-color: #aa9cfc">PERSON</span>
+          <span
+            style="background-color: #aa9cfc; color: black; font-weight: bold"
+            >PERSON</span
+          >
+        </div>
+        <div class="block">
           <input type="checkbox" id="ent" value="norp" class="largerCheckbox" />
-          <span style="background-color: #c887fb">NORP</span>
+          <span
+            style="background-color: #c887fb; color: black; font-weight: bold"
+            >NORP</span
+          >
+        </div>
+        <div class="block">
           <input type="checkbox" id="ent" value="org" class="largerCheckbox" />
-          <span style="background-color: #7aecec">ORG</span>
+          <span
+            style="background-color: #7aecec; color: black; font-weight: bold"
+            >ORG</span
+          >
+        </div>
 
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="gpe"
             class="largerCheckbox"
           />
-          <span style="background-color: #fd9720">GPE</span>
+          <span
+            style="background-color: #fd9720; color: black; font-weight: bold"
+            >GPE</span
+          >
+        </div>
 
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="loc"
             class="largerCheckbox"
           />
-          <span style="background-color: #fd9720">LOC</span>
+          <span
+            style="background-color: #fd9720; color: black; font-weight: bold"
+            >LOC</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="product"
             class="largerCheckbox"
           />
-          <span style="background-color: #bfeeb7">PRODUCT</span>
-
+          <span
+            style="background-color: #bfeeb7; color: black; font-weight: bold"
+            >PRODUCT</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="event"
             class="largerCheckbox"
           />
-          <span style="background-color: #ffeb80">EVENT</span>
-
+          <span
+            style="background-color: #ffeb80; color: black; font-weight: bold"
+            >EVENT</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="work_of_art"
             class="largerCheckbox"
           />
-          <span style="background-color: #f0d0ff">WORK OF ART</span>
-          <br />
+          <span
+            style="background-color: #f0d0ff; color: black; font-weight: bold"
+            >WORK OF ART</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="LANGUAGE"
             class="largerCheckbox"
           />
-          <span style="background-color: #ff8197">LANGUAGE</span>
+          <span
+            style="background-color: #ff8197; color: black; font-weight: bold"
+            >LANGUAGE</span
+          >
+        </div>
 
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="date"
             class="largerCheckbox"
           />
-          <span style="background-color: #bfe1d9">DATE</span>
-
+          <span
+            style="background-color: #bfe1d9; color: black; font-weight: bold"
+            >DATE</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="time"
             class="largerCheckbox"
           />
-          <span style="background-color: #bfe1d9">TIME</span>
-
+          <span
+            style="background-color: #bfe1d9; color: black; font-weight: bold"
+            >TIME</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="percent"
             class="largerCheckbox"
           />
-          <span style="background-color: #e4e7d2">PERCENT</span>
-
+          <span
+            style="background-color: #e4e7d2; color: black; font-weight: bold"
+            >PERCENT</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="money"
             class="largerCheckbox"
           />
-          <span style="background-color: #e4e7d2">MONEY</span>
-
+          <span
+            style="background-color: #e4e7d2; color: black; font-weight: bold"
+            >MONEY</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="quantity"
             class="largerCheckbox"
           />
-          <span style="background-color: #e4e7d2">QUANTITY</span>
-
+          <span
+            style="background-color: #e4e7d2; color: black; font-weight: bold"
+            >QUANTITY</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="ordinal"
             class="largerCheckbox"
           />
-          <span style="background-color: #e4e7d2">ORDINAL</span>
-
+          <span
+            style="background-color: #e4e7d2; color: black; font-weight: bold"
+            >ORDINAL</span
+          >
+        </div>
+        <div class="block">
           <input
             type="checkbox"
             name="ent"
             value="cardinal"
             class="largerCheckbox"
           />
-          <span style="background-color: #e4e7d2">CARDINAL</span>
-        </fieldset>
+          <span
+            style="background-color: #e4e7d2; color: black; font-weight: bold"
+            >CARDINAL</span
+          >
+        </div>
       </div>
     </div>
     <form align="left">
-      <div id="output" class="neon" ></div>
+      <div id="output" class="neon"></div>
     </form>
   </body>
   <script>

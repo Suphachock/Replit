@@ -31,11 +31,23 @@ input.largerCheckbox {
   height: 17px;
 }
 .social {
-  background-color: rgb(195, 195, 195);
-  color: black;
+  text-align: center;
+  border-style: solid;
+  border-color: white;
+  color: white;
   width: 80%;
   padding: 0 0 14px 0;
   margin: 10px auto;
+}
+.block {
+  text-align: left;
+  display: inline-block;
+  margin: 4px ;
+  padding: 3px;
+  width: 20%;
+}
+.block span {
+  width:100px;
 }
 
 div.table-title {
@@ -229,8 +241,7 @@ h1 {
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 0.1em;
-  animation: typing 1.2s steps(60, end),
-    cursor-blink 0.33s step-end ;
+  animation: typing 1.2s steps(60, end), cursor-blink 0.33s step-end;
 }
 h2 {
   margin: auto;
@@ -241,8 +252,7 @@ h2 {
   width: 22ch;
   white-space: nowrap;
   overflow: hidden;
-  animation: typing 1.2s steps(60, end),
-    cursor-blink 0.3s step-end ;
+  animation: typing 1.2s steps(60, end), cursor-blink 0.3s step-end;
 }
 h3 {
   margin: auto;
@@ -253,8 +263,7 @@ h3 {
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 1.2em;
-  animation: typing 1.2s steps(60, end),
-    cursor-blink 0.3s step-end ;
+  animation: typing 1.2s steps(60, end), cursor-blink 0.3s step-end;
 }
 
 @keyframes typing {

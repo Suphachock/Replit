@@ -11,7 +11,7 @@ import spacy
 from spacy import displacy
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import pandas as pd
-
+import json
 app = Flask(__name__)
 app.config["UPLOAD PATH"] = "upload"
 
@@ -29,7 +29,7 @@ def upload_file():
         for f in os.listdir(dir):
             os.path.join(dir, f)
             os.remove(os.path.join(dir, f))
-    if request.method == "POST" and request.form['action'] == 'Submit':
+    if request.method == "POST":
         dir = './upload'
         for f in os.listdir(dir):
             os.path.join(dir, f)
@@ -103,88 +103,6 @@ def upload_file():
             'result2': tf,
         }
         return render_template("find.html", **data)
-
-    if (request.method == "POST" and request.form['action'] == 'Search'):
-        find_word = request.form.get("text")
-        dir = './upload'
-        tmp_file = []
-        textfile = []
-        for f in os.listdir(dir):
-            test = None
-            test1 = []
-            gg = os.path.join(dir, f)
-            rr = os.path.join(f)
-            textfile.append(rr)
-            f = open(gg, "r", encoding="utf8")
-            article = f.read()
-            tokens = word_tokenize(article)
-            # Convert the tokens into lowercase: lower_tokens
-            lower_tokens = [t.lower() for t in tokens]
-            # Retain alphabetic words: alpha_only
-            alpha_only = [t for t in lower_tokens if t.isalpha()]
-            # Remove all stop words: no_stops
-            no_stops = [
-                t for t in alpha_only if t not in stopwords.words('english')]
-            # Instantiate the WordNetLemmatizer
-            wordnet_lemmatizer = WordNetLemmatizer()
-            # Lemmatize all tokens into a new list: lemmatized
-            lemmatized = [wordnet_lemmatizer.lemmatize(t) for t in no_stops]
-            # list_article
-            articles.append(lemmatized)
-            test1.append(lemmatized)
-            dictionary = Dictionary(articles)
-            test = Dictionary(test1)
-            computer_id = test.token2id.get(find_word)
-            tmp_file.append(computer_id)
-
-        def BOW(articles):
-            a = []
-            corpus = [dictionary.doc2bow(a) for a in articles]
-            # Save the second document: doc
-            doc = corpus[0]
-            # Sort the doc for frequency: bow_doc
-            bow_doc = sorted(doc, key=lambda w: w[1], reverse=True)
-            for word_id, word_count in bow_doc[:5]:
-                (dictionary.get(word_id), word_count)
-            total_word_count = defaultdict(int)
-            for word_id, word_count in itertools.chain.from_iterable(corpus):
-                total_word_count[word_id] += word_count
-            # Create a sorted list from the defaultdict: sorted_word_count
-            sorted_word_count = sorted(
-                total_word_count.items(), key=lambda w: w[1], reverse=True)
-            for word_id, word_count in sorted_word_count[:5]:
-                final = (dictionary.get(word_id), word_count)
-                a.append(final)
-            return a
-
-        def tf_idf(articles):
-            b = []
-            corpus = [dictionary.doc2bow(a) for a in articles]
-            # Save the second document: doc
-            doc = corpus[0]
-            tfidf = TfidfModel(corpus)
-            # Calculate the tfidf weights of doc: tfidf_weights
-            tfidf_weights = tfidf[doc]
-            # Sort the weights from highest to lowest: sorted_tfidf_weights
-            sorted_tfidf_weights = sorted(
-                tfidf_weights, key=lambda w: w[1], reverse=True)
-            # Print the top 5 weighted words
-            for term_id, weight in sorted_tfidf_weights[:5]:
-                final2 = dictionary.get(term_id), weight
-                b.append(final2)
-            return b
-
-        bow = BOW(articles)
-        tf = tf_idf(articles)
-
-        data = {
-            'result1': bow,
-            'result2': tf,
-            'result3': tmp_file,
-            'find_word': find_word,
-            'fn': textfile
-        }
-        return render_template("find.html", **data)
     return render_template('index.html')
 
 
@@ -197,6 +115,7 @@ def lab2():
         html = displacy.render(doc, style="ent")
         return jsonify({'output': Markup(html)})
     return render_template('lab2.html')
+
 
 
 @app.route('/filter', methods=['GET', 'POST'])
@@ -215,10 +134,11 @@ def filter1():
 @app.route('/fakeNews', methods=['GET', 'POST'])
 def fakeNews():
     if request.method == "POST":
-        model_path = "FakeNewsV1"
+        model_path = "model"
         real_news = request.form['text'].strip()
         model = AutoModelForSequenceClassification.from_pretrained(model_path)
         tokenizer = AutoTokenizer.from_pretrained(model_path)
+
         def get_prediction(text, convert_to_label=False):
             # prepare our text into tokenized sequence
             inputs = tokenizer(text, padding=True, truncation=True, max_length=512,
@@ -253,5 +173,45 @@ def fakeNews():
     return render_template('fakeNews.html')
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    articles = []
+    if (request.method == "POST"):
+        find_word = request.form.get("text")
+        dir = './upload'
+        tmp_file = []
+        textfile = []
+        for f in os.listdir(dir):
+            test = None
+            test1 = []
+            gg = os.path.join(dir, f)
+            rr = os.path.join(f)
+            textfile.append(rr)
+            f = open(gg, "r", encoding="utf8")
+            article = f.read()
+            tokens = word_tokenize(article)
+            # Convert the tokens into lowercase: lower_tokens
+            lower_tokens = [t.lower() for t in tokens]
+            # Retain alphabetic words: alpha_only
+            alpha_only = [t for t in lower_tokens if t.isalpha()]
+            # Remove all stop words: no_stops
+            no_stops = [
+                t for t in alpha_only if t not in stopwords.words('english')]
+            # Instantiate the WordNetLemmatizer
+            wordnet_lemmatizer = WordNetLemmatizer()
+            # Lemmatize all tokens into a new list: lemmatized
+            lemmatized = [wordnet_lemmatizer.lemmatize(t) for t in no_stops]
+            # list_article
+            articles.append(lemmatized)
+            test1.append(lemmatized)
+            dictionary = Dictionary(articles)
+            test = Dictionary(test1)
+            computer_id = test.token2id.get(find_word)
+            tmp_file.append(computer_id)
+            data={'count': tmp_file, 'keyword': find_word, 'text_file': textfile}
+        return (data)
+    return render_template('find.html')
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(server="0.0.0.0",port=8080)

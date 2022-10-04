@@ -7,6 +7,7 @@ body {
   margin: 0;
   background: linear-gradient(#141e30, #243b55) fixed no-repeat;
 }
+
 .ex1 {
   color: #fff;
   font: Consolas, Monaco, monospace;
@@ -42,12 +43,44 @@ input.largerCheckbox {
 .block {
   text-align: left;
   display: inline-block;
-  margin: 4px ;
+  margin: 4px;
   padding: 3px;
   width: 20%;
 }
-.block span {
-  width:100px;
+.new2 {
+  text-align: left;
+  width: 100%;
+  margin: auto;
+  padding: auto;
+}
+.grop1 {
+  text-align: left;
+  display: inline-block;
+  width: 45%;
+  margin: 0 auto;
+  padding: auto;
+}
+.grop2 {
+  text-align: left;
+  width: 45%;
+  margin: 0 40px auto;
+  padding: auto;
+  float: right;
+  height: auto;
+}
+.grop3 {
+  display: flex;
+  justify-content: space-between;
+  padding: auto;
+  margin: 0 auto;
+}
+.grop3 button {
+  margin: 10px 0 auto;
+  padding: auto;
+}
+.load {
+  margin: 15px 0 auto;
+  padding: auto;
 }
 
 div.table-title {

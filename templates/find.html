@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -20,8 +20,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <script
+      src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"
+      defer
+    ></script>
   </head>
-
   <body>
     {% include "navbar.html" %}
     <div class="ex1">
@@ -37,133 +40,141 @@
             width="1"
           />
           <div class="col-md-12 text-center">
-            <!-- <input
+            <button
+              class="custom-btn btn-6"
               type="submit"
-              class="btn btn-outline-success"
               name="action"
               value="Submit"
-              align="center"
-            /> -->
-            <button class="custom-btn btn-6" type="submit"name="action" value="Submit"><span>Submit</span></button>
+            >
+              <span>Submit</span>
+            </button>
           </div>
         </div>
       </form>
-      <h4 align="center">
-        Find Word
-        <form method="POST" class="example">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search.."
-            name="text"
-            id="text"
-            required
-          />
-          <!-- <button
-            type="submit"
-            name="action"
-            value="Search"
-            id="submit"
-            class="btn btn-outline-warning"
-          >
-            Search <i class="fa fa-search" aria-hidden="true"></i>
-          </button> -->
-          <button class="custom-btn btn-7" type="submit" name="action" value="Search"><span STYLE="font-size:18px">Search</span></button>
-        </form>
-      </h4>
-      <h4>Bag-of-words</h4>
-      <div class="table-title"></div>
-      <table class="table-fill">
-        <thead>
-          <tr>
-            <th class="text-left">NO.</th>
-            <th class="text-left">Word Tokenize</th>
-            <th class="text-left">Total (Words)</th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          <tr>
-            {% set count = namespace(value=1) %} {% for item in result1 %}
-            <td class="text-left">{{count.value}}</td>
-            <td class="text-left">{{item[0]}}</td>
-            <td class="text-left">{{item[1]}}</td>
-          </tr>
-          {% set count.value = count.value + 1 %} {% endfor %}
-          <tr></tr>
-        </tbody>
-      </table>
-      {% if result2 %}
-      <h4>TF-IDF</h4>
-      <div class="table-title"></div>
-      <table class="table-fill">
-        <thead>
-          <tr>
-            <th class="text-left">NO.</th>
-            <th class="text-left">Word Tokenize</th>
-            <th class="text-left">Total (%)</th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          <tr>
-            {% set count = namespace(value=1) %} {% for item in result2 %}
-            <td class="text-left">{{count.value}}</td>
-            <td class="text-left">{{item[0]}}</td>
-            <td class="text-left">{{item[1]}}</td>
-          </tr>
-          {% set count.value = count.value + 1 %} {% endfor %}
-          <tr></tr>
-        </tbody>
-      </table>
-      {% endif %} {% if result3 %}
-      <h4>Words Results</h4>
-      <div class="table-title"></div>
-      <table class="table-fill">
-        <thead>
-          <tr>
-            <th class="text-left">Name</th>
-            <th class="text-left">Text File</th>
-            <th class="text-left">Total (Words)</th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          {% set count = namespace(value=0) %} {%for item in result3%}
-          <tr>
-            <td class="text-left">{{find_word}}</td>
-            <td class="text-left">{{fn[count.value]}}</td>
-            <td class="text-left">{{item}}</td>
-          </tr>
-          {% set count.value = count.value + 1 %} {%endfor%}
-          <tr></tr>
-        </tbody>
-      </table>
-      {% elif result3 == None %}
-      <h4>Words Results</h4>
-      <div class="table-title"></div>
-      <table class="table-fill">
-        <thead>
-          <tr>
-            <th class="text-left">Name</th>
-            <th class="text-left">Found</th>
-            <th class="text-left">Total (Words)</th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          <tr>
-            <td class="text-left">{{find_word}}</td>
-            <td class="text-left">-</td>
-            <td class="text-left">-</td>
-          </tr>
-          <tr></tr>
-        </tbody>
-      </table>
+
+      <div class="new2">
+        <div class="grop1">
+          <h4>Bag-of-words</h4>
+          <div class="table-title"></div>
+          <table class="table-fill" align="left">
+            <thead>
+              <tr>
+                <th class="text-left">NO.</th>
+                <th class="text-left">Word Tokenize</th>
+                <th class="text-left">Total (Words)</th>
+              </tr>
+            </thead>
+            <tbody class="table-hover">
+              <tr>
+                {% set count = namespace(value=1) %} {% for item in result1 %}
+                <td class="text-left">{{count.value}}</td>
+                <td class="text-left">{{item[0]}}</td>
+                <td class="text-left">{{item[1]}}</td>
+              </tr>
+              {% set count.value = count.value + 1 %} {% endfor %}
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        {% if result2 %}
+        <div class="grop2">
+          <h4>TF-IDF</h4>
+          <div class="table-title"></div>
+          <table class="table-fill" align="left">
+            <thead>
+              <tr>
+                <th class="text-left">NO.</th>
+                <th class="text-left">Word Tokenize</th>
+                <th class="text-left">Total (%)</th>
+              </tr>
+            </thead>
+            <tbody class="table-hover">
+              <tr>
+                {% set count = namespace(value=1) %} {% for item in result2 %}
+                <td class="text-left">{{count.value}}</td>
+                <td class="text-left">{{item[0]}}</td>
+                <td class="text-left">{{item[1]}}</td>
+              </tr>
+              {% set count.value = count.value + 1 %} {% endfor %}
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
+        {% endif %} {% if result3 %}
+      </div>
       {% endif %} {{tmp}}
+    </div>
+    <br />
+    <div class="new2">
+      <div class="grop1">
+        <h4 align="center">
+          Find Keywords
+          <form id="form" class="example">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search.."
+              name="text1"
+              id="text1"
+              required
+            />
+            <div class="grop3">
+              <button id="submit" class="custom-btn btn-7">
+                <span STYLE="font-size:18px">Search</span>
+              </button>
+              <div id="loader" style="display: none" class="load">
+                <img src="/static/img/load.gif" / width="30" height="30">
+                <b>Loading..</b>
+              </div>
+            </div>
+          </form>
+        </h4>
+      </div>
+      <div class="grop2">
+        <table id="example4" width="100%"></table>
+      </div>
     </div>
 
     <script>
-
       if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
       }
+      $(document).ready(function () {
+        $("#form").on("submit", function (e) {
+          $.ajax({
+            data: {
+              text: $("#text1").val(),
+            },
+            type: "POST",
+            url: "/search",
+            beforeSend: function () {
+              $("#loader").show();
+            },
+          }).done(function (data) {
+            $("#loader").hide();
+            var myTable =
+              '<table class="table-fill">' +
+              "<thead>" +
+              "<tr>" +
+              '<th class="text-left">Keywords</th>' +
+              '<th class="text-left">Text File</th>' +
+              '<th class="text-left">Total (Words)</th>' +
+              "</tr>" +
+              "</thead>" +
+              '<tbody class="table-hover">';
+            for (var i = 0; i < data.text_file.length; i++) {
+              myTable += `<tr>
+              <td class="text-left">${data.keyword}</td>
+              <td class="text-left">${data.text_file[i]}</td>
+              <td class="text-left">${data.count[i]}</td>
+              </tr>`;
+            }
+            ("</tbody>");
+            document.getElementById("example4").innerHTML = myTable;
+          });
+          e.preventDefault();
+        });
+      });
     </script>
   </body>
   <script src="{{url_for('static', filename='script/script.js')}}"></script>

@@ -120,12 +120,15 @@
             />
             <div class="grop3">
               <button id="submit" class="custom-btn btn-7">
-                <span STYLE="font-size:18px">Search</span>
+                <span STYLE="font-size:18px"
+                  >Search
+                  <i
+                    class="fa fa-refresh fa-spin"
+                    style="display: none"
+                    id="loader"
+                  ></i>
+                </span>
               </button>
-              <div id="loader" style="display: none" class="load">
-                <img src="/static/img/load.gif" / width="30" height="30">
-                <b>Loading..</b>
-              </div>
             </div>
           </form>
         </h4>
@@ -163,9 +166,11 @@
               "</thead>" +
               '<tbody class="table-hover">';
             for (var i = 0; i < data.text_file.length; i++) {
+              if (data.count[i] == null) data.count[i] = 0;
               myTable += `<tr>
               <td class="text-left">${data.keyword}</td>
-              <td class="text-left">${data.text_file[i]}</td>
+              <td class="text-left">
+                ${data.text_file[i]}</td>
               <td class="text-left">${data.count[i]}</td>
               </tr>`;
             }

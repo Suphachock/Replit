@@ -25,7 +25,37 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <style>
+      /* .loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        backdrop-filter: blur(5px);
+      }
+      .bg-load {
+        background-color: yellow;
+        height: 100%;
+        width: 100%;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      } */
+    </style>
   </head>
+
   <body>
     {% include "navbar.html" %}
     <div class="ex1">
@@ -45,7 +75,14 @@
         ></textarea>
         <br />
         <div class="sm">
-          <button id="submit">Submit</button>
+          <button id="submit">
+            Submit
+            <i
+              class="fa fa-refresh fa-spin"
+              style="display: none"
+              id="loader"
+            ></i>
+          </button>
         </div>
       </form>
       <div class="social">
@@ -237,6 +274,9 @@
           >
         </div>
       </div>
+      <div class="bg-load" id="bg-load">
+        <div id="loader" class="loader" style="display: none"></div>
+      </div>
     </div>
     <form align="left">
       <div id="output" class="neon"></div>
@@ -253,7 +293,11 @@
           },
           type: "POST",
           url: "/lab2.html",
+          beforeSend: function () {
+            $("#loader").show();
+          },
         }).done(function (data) {
+          $("#loader").hide();
           var tt = $("#textarea").val();
           if (tt != "") $("#output").html(data.output).show();
           else $("#output").hide();

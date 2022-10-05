@@ -21,13 +21,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/submit.css') }}"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
     {% include "navbar.html" %}
     <div class="ex1">
       <form id="form" align="center">
-        <h3>Fake NEWS Detector <i class="fa fa-newspaper-o" style="font-size:36px"></i></h3>
+        <h3>
+          Fake NEWS Detector
+          <i class="fa fa-newspaper-o" style="font-size: 36px"></i>
+        </h3>
         <textarea
           id="textarea"
           name="textarea"
@@ -38,12 +44,20 @@
         ></textarea>
         <br />
         <div class="sm">
-          <button id="submit">Predict</button>
+          <button id="submit">
+            Predict
+            <i
+              class="fa fa-spinner fa-spin"
+              style="display: none"
+              id="loader"
+            ></i>
+          </button>
         </div>
       </form>
-    <form align="left">
-      <div id="output" class="neon" ></div>
-    </form>
+      <form align="left">
+        <div id="output" class="neon"></div>
+      </form>
+    </div>
   </body>
   <script>
     $("#output").hide();
@@ -55,9 +69,12 @@
           },
           type: "POST",
           url: "/fakeNews",
+          beforeSend: function () {
+            $("#loader").show();
+          },
         }).done(function (data) {
+          $("#loader").hide();
           var tt = $("#textarea").val();
-          console.log(tt);
           if (tt != "") $("#output").html(data.output).show();
           else $("#output").hide();
         });
